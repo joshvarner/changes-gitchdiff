@@ -51,4 +51,16 @@ ARGV.each do |arg|
   end
 end
 
+ret = nil
+
+Dir.chdir(git_dir) do
+  ret = system "git status 1> /dev/null 2>&1"
+end
+
+if true != ret
+  print ret
+  print "Error: '#{git_dir}' does not appear to be a git repository\n"
+  exit -1
+end
+
 diff(git_dir, revs)
